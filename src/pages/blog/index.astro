@@ -1,0 +1,34 @@
+---
+import Layout from '@layouts/Page.astro'
+import Hero from '@components/Hero.astro'
+import Card from '@components/Card.astro'
+import { getCollection } from 'astro:content'
+const blogEntries = await getCollection('blog')
+---
+
+<Layout title="Blog">
+  <Hero title="Blog" center size="sm" />
+
+  <div class="container" style="max-width: 40rem;">
+    <ol class="">
+      {
+        blogEntries.map((blogPostEntry) => (
+          <li>
+            <Card
+              title={blogPostEntry.data.title}
+              text={blogPostEntry.body.substring(0, 100)}
+              href={`/blog/${blogPostEntry.slug}`}
+            />
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <style>
+    ol {
+      list-style-type: none;
+      padding: 0;
+    }
+  </style>
+</Layout>

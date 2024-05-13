@@ -1,0 +1,45 @@
+/* Dark mode colors. */
+:root,
+:root[data-theme='light'] {
+  --sl-color-accent-low: #072d00;
+  --sl-color-accent: var(--pico-secondary);
+  --sl-color-accent-high: var(--pico-primary);
+  --sl-color-white: var(--pico-h1-color);
+  --sl-color-gray-1: var(--pico-h2-color);
+  --sl-color-gray-2: var(--pico-h3-color);
+  --sl-color-gray-3: var(--pico-h4-color);
+  --sl-color-gray-4: var(--pico-h5-color);
+  --sl-color-gray-5: var(--pico-h6-color);
+  --sl-color-gray-6: var(--pico-card-background-color);
+  --sl-color-black: var(--pico-background-color);
+}
+
+/* Fix issues from pico */
+.site-title img {
+  height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+}
+
+nav ul {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+details > summary::after {
+  display: none;
+}
+
+starlight-theme-select select {
+  margin: 0;
+  background-image: none !important;
+}
+
+nav.sidebar li {
+  display: block;
+  --pico-nav-element-spacing-vertical: 0.25rem;
+  --pico-nav-element-spacing-horizontal: 0.25rem;
+}
+
+nav.sidebar li :where(a, [role='link']) {
+  display: block;
+}

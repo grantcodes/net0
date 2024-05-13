@@ -1,0 +1,48 @@
+---
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils'
+
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+---
+
+<footer>
+  <div class="container grid">
+    <div>
+      <h4>{t('footer.title')}</h4>
+      <p>{t('footer.description')}</p>
+    </div>
+
+    <div>
+      <nav>
+        <ul>
+          <li><a>Dashboard</a></li>
+          <li><a>Customers</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div>
+      <div id="wcb" class="carbonbadge wcb-d"></div>
+      <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer
+      ></script>
+    </div>
+  </div>
+</footer>
+
+<style>
+  body > footer {
+    padding-block: 4rem;
+    background: var(--pico-card-background-color);
+  }
+</style>
+<style is:global>
+  footer #wcb.carbonbadge {
+    --b1: var(--pico-primary-inverse);
+    --b2: var(--pico-primary);
+  }
+
+  footer #wcb #wcb_g {
+    background-color: inherit;
+  }
+</style>
