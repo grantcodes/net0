@@ -1,5 +1,7 @@
 import { co2 } from '@tgwf/co2'
 
+type ResourceCategoryId = 'media' | 'js' | 'css' | 'html' | 'other'
+
 const IGNORED_RESOURCES = [
   /\/node_modules\/astro/,
   /\/node_modules\/vite/,
@@ -9,71 +11,97 @@ const IGNORED_RESOURCES = [
   /\/toolbar\/app.ts/,
 ]
 
-type ResourceCategoryId = 'media' | 'js' | 'css' | 'html' | 'other'
+const co2Emission = new co2()
 
-interface Resource {
+class Resource {
   name: string
   bytes: number
   duration: number
-  isExternal: boolean
+
+  constructor(entry: PerformanceResourceTiming | PerformanceNavigationTiming) {
+    this.name = entry.name
+    this.bytes = entry.encodedBodySize
+    this.duration = entry.duration
+  }
+
+  get isExternal() {
+    return !this.name.startsWith(location.origin)
+  }
+
+  get co2(): number {
+    return co2Emission.perByte(this.bytes, true)
+  }
 }
 
-interface ResourceCategory {
+class ResourceCategory {
   id: ResourceCategoryId
   name: string
   description: string
-  totalCo2: number
-  totalBytes: number
-  totalDuration: number
-  resources: Resource[]
+  _resources: Resource[] = []
+
+  constructor(id: ResourceCategoryId, name: string, description: string) {
+    this.id = id
+    this.name = name
+    this.description = description
+  }
+
+  addEntry(entry: PerformanceResourceTiming | PerformanceNavigationTiming) {
+    // Ignore if no encodedBodySize
+    if (!entry.encodedBodySize) {
+      return
+    }
+    // Ignore if already in resources
+    if (this._resources.some((resource) => resource.name === entry.name)) {
+      return
+    }
+
+    // Add to the resources array
+    this.resources.push(new Resource(entry))
+  }
+
+  get resources(): Resource[] {
+    // Sort resources by co2 emission
+    return this._resources.sort((a, b) => b.co2 - a.co2)
+  }
+
+  get totalBytes(): number {
+    return this.resources.reduce((total, resource) => total + resource.bytes, 0)
+  }
+
+  get totalDuration(): number {
+    return this.resources.reduce(
+      (total, resource) => total + resource.duration,
+      0
+    )
+  }
+
+  get totalCo2(): number {
+    return this.resources.reduce((total, resource) => total + resource.co2, 0)
+  }
 }
 
 const baseResources: ResourceCategory[] = [
-  {
-    id: 'html',
-    name: 'HTML',
-    description: 'The base html document',
-    totalCo2: 0,
-    totalBytes: 0,
-    totalDuration: 0,
-    resources: [],
-  },
-  {
-    id: 'js',
-    name: 'JavaScript',
-    description: 'First and third party JavaScript loaded on this page',
-    totalCo2: 0,
-    totalBytes: 0,
-    totalDuration: 0,
-    resources: [],
-  },
-  {
-    id: 'css',
-    name: 'CSS',
-    description: 'First and third party CSS styles loaded on this page',
-    totalCo2: 0,
-    totalBytes: 0,
-    totalDuration: 0,
-    resources: [],
-  },
-  {
-    id: 'media',
-    name: 'Media',
-    description: 'All images, video and audio loaded on this page',
-    totalCo2: 0,
-    totalBytes: 0,
-    totalDuration: 0,
-    resources: [],
-  },
-  {
-    id: 'other',
-    name: 'Other',
-    description: 'Everything else and things this tool failed to categorize',
-    totalCo2: 0,
-    totalBytes: 0,
-    totalDuration: 0,
-    resources: [],
-  },
+  new ResourceCategory('html', 'HTML', 'The base html document'),
+  new ResourceCategory(
+    'js',
+    'JavaScript',
+    'First and third party JavaScript loaded on this page'
+  ),
+  new ResourceCategory(
+    'css',
+    'CSS',
+    'First and third party CSS styles loaded on this page'
+  ),
+  new ResourceCategory(
+    'media',
+    'Media',
+    'All images, video and audio loaded on this page'
+  ),
+  new ResourceCategory(
+    'other',
+    'Other',
+    'Everything else and things this tool failed to categorize'
+  ),
 ]
 
 function getPerformanceEntryResouceCategory(
@@ -113,7 +141,6 @@ function getPerformanceEntryResouceCategory(
 
 function getPerformanceResources(): ResourceCategory[] {
   const resourceCategories = baseResources
-  const co2Emission = new co2()
 
   // Get all performance entries
   const performanceEntries = performance.getEntries()
@@ -136,30 +163,7 @@ function getPerformanceResources(): ResourceCategory[] {
     const category = getPerformanceEntryResouceCategory(entry)
     const resourceCategory = resourceCategories.find((c) => c.id === category)
 
-    const entryResouce: Resource = {
-      name: entry.name,
-      bytes: entry.encodedBodySize,
-      duration: entry.duration,
-      isExternal: false,
-    }
-
-    try {
-      const isExternal = new URL(entry.name).hostname !== location.hostname
-      entryResouce.isExternal = isExternal
-    } catch (err) {
-      // Resource name probably isn't a url. Not a big deal, just assume it's internal
-    }
-
-    console.log(entry)
-
-    const entryCo2 = co2Emission.perByte(entryResouce.bytes, true)
-
-    resourceCategory.resources.push(entryResouce)
-    resourceCategory.totalBytes =
-      resourceCategory.totalBytes + entryResouce.bytes
-    resourceCategory.totalDuration =
-      resourceCategory.totalDuration + entryResouce.duration
-    resourceCategory.totalCo2 = resourceCategory.totalCo2 + entryCo2
+    resourceCategory.addEntry(entry)
   }
 
   return resourceCategories
