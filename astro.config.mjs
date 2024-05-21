@@ -8,6 +8,13 @@ import swsIntegration from './toolbar/integration.ts'
 export default defineConfig({
   site: 'https://sws.grant.codes',
   output: 'static',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     swsIntegration,
     starlight({

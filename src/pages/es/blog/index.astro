@@ -1,6 +1,7 @@
 ---
 import Layout from '@layouts/Page.astro'
 import { getCollection } from 'astro:content'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 const blogEntries = await getCollection('blog')
 ---
 
@@ -12,7 +13,7 @@ const blogEntries = await getCollection('blog')
     {
       blogEntries.map((blogPostEntry) => (
         <li>
-          <a href={`/blog/es/${blogPostEntry.slug}`}>
+          <a href={getRelativeLocaleUrl('es', `blog/${blogPostEntry.slug}`)}>
             {blogPostEntry.data.title}
           </a>
         </li>

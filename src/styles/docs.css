@@ -12,6 +12,7 @@
   --sl-color-gray-5: var(--pico-h6-color);
   --sl-color-gray-6: var(--pico-card-background-color);
   --sl-color-black: var(--pico-background-color);
+  font-size: 100%;
 }
 
 /* Fix issues from pico */
