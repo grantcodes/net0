@@ -35,6 +35,25 @@ export default defineConfig({
         '@picocss/pico/css/pico.conditional.jade.min.css',
         './src/styles/docs.css',
       ],
+      editLink: {
+        baseUrl: 'https://github.com/grantcodes/net0/edit/main/',
+      },
+      sidebar: [
+        // { label: 'Getting started', link: '/getting-started/' },
+        {
+          label: 'Getting started',
+          autogenerate: { directory: 'docs/getting-started' },
+        },
+        { label: 'Extending', autogenerate: { directory: 'docs/extending' } },
+        {
+          label: 'Recommendations',
+          autogenerate: { directory: 'docs/recommendations' },
+        },
+        { label: 'Tech choices', link: '/docs/tech-choices/' },
+      ],
+      social: {
+        github: 'https://github.com/grantcodes/net0',
+      },
     }),
     sitemap(),
   ],

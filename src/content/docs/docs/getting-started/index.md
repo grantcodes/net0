@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Installing
 description: How to get up and running with Net0.1 to build a sustainable website.
 ---
 
