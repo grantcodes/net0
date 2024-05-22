@@ -29,10 +29,10 @@ export default defineConfig({
         },
       },
       title: {
-        en: 'Docs',
+        en: 'Net0.1',
       },
       customCss: [
-        '@picocss/pico/css/pico.jade.min.css',
+        '@picocss/pico/css/pico.conditional.jade.min.css',
         './src/styles/docs.css',
       ],
     }),
