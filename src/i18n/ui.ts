@@ -9,7 +9,7 @@ export const ui = {
     'header.about': 'About',
     'header.docs': 'Docs',
     'header.blog': 'Blog',
-    'footer.title': 'Sustainable Web Stater',
+    'footer.title': 'Net0.1',
     'footer.description':
       'A starter template for sustainable web development, made with love by grant.codes',
   },

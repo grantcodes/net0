@@ -17,7 +17,7 @@ export async function GET(context) {
   }
 
   return rss({
-    title: 'Sustainable Web Starter',
+    title: 'Net0.1 Blog',
     description: 'A humble Astronaut’s guide to the stars',
     site: context.site,
     items: blog.map(getItem),
