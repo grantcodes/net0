@@ -24,12 +24,13 @@ const { title, entries, lang = defaultLang, urlPrependWith } = Astro.props
         entries.map((entry) => (
           <li>
             <Card
-              title={entry.data.title}
-              text={entry.body.substring(0, 100)}
               href={getRelativeLocaleUrl(lang, entry.slug, {
                 prependWith: urlPrependWith,
               })}
-            />
+              >
+              <h2>{entry.data.title}</h2>
+              <p>entry.body.substring(0, 100)}</p>
+           </Card> 
           </li>
         ))
       }
