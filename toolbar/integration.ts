@@ -7,7 +7,7 @@ export default {
     'astro:config:setup': ({ addDevToolbarApp }) => {
       addDevToolbarApp({
         id: 'sustainable-web-starter',
-        name: 'SWS',
+        name: 'Net0',
         icon: '🌱',
         entrypoint: fileURLToPath(new URL('./app.ts', import.meta.url)),
       })

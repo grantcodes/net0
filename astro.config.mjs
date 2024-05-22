@@ -2,11 +2,11 @@ import { defineConfig } from 'astro/config'
 import starlight from '@astrojs/starlight'
 
 import sitemap from '@astrojs/sitemap'
-import swsIntegration from './toolbar/integration.ts'
+import net0Integration from './toolbar/integration.ts'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://sws.grant.codes',
+  site: 'https://net0.grant.codes',
   output: 'static',
   i18n: {
     defaultLocale: 'en',
@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   integrations: [
-    swsIntegration,
+    net0Integration,
     starlight({
       defaultLocale: 'root',
       logo: {
