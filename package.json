@@ -10,11 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.1.4",
-    "@astrojs/starlight": "^0.22.1",
+    "@astrojs/rss": "^4.0.6",
+    "@astrojs/sitemap": "^3.1.5",
+    "@astrojs/starlight": "^0.23.1",
     "@picocss/pico": "^2.0.6",
-    "astro": "^4.7.1"
+    "astro": "^4.8.7"
   },
   "devDependencies": {
     "@tgwf/co2": "^0.15.0"
