@@ -1,27 +1,18 @@
 ---
 import { getCollection } from 'astro:content'
 import Layout from '@layouts/Page.astro'
-import { defaultLang } from '@i18n/utils'
+import { defaultLang, getEntryStaticPaths } from '@i18n/utils'
 import Hero from '@components/Hero.astro'
-// 1. Generate a new path for every collection entry
+
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog')
-  // TODO: Language paths should be skipped for default language
-  const staticPaths = blogEntries.map((entry) => {
-    let lang = defaultLang
-    let slug = [entry.slug]
-    if (entry.slug.includes('/')) {
-      // Is in a language subdirectory
-      ;[lang, ...slug] = entry.slug.split('/')
-    }
-    return {
-      params: { lang, slug: slug.join('/') || undefined },
-      props: { entry },
-    }
-  })
+  const staticPaths = getEntryStaticPaths(blogEntries).filter(
+    (path) => path.params.lang === defaultLang
+  )
+
   return staticPaths
 }
-// 2. For your template, you can get the entry directly from the prop
+
 const { entry } = Astro.props
 if (!entry) {
   throw new Error('No entry provided')

@@ -1,7 +1,14 @@
 ---
 import Layout from '@layouts/Page.astro'
+import Hero from '@components/Hero.astro'
+import Card from '@components/Card.astro'
 ---
 
-<Layout title="Bienvenidos">
-  <main>Hola</main>
+<Layout title="Sustainable Web Starter">
+  <Hero title="Hola" text="" button="Empezar" href="/docs/get-started" center />
+  <div class="grid container">
+    <Card title="Static by default" text="About this feature" />
+    <Card title="i18n" text="About this feature" />
+    <Card title="Built in docs" text="About this feature" />
+  </div>
 </Layout>

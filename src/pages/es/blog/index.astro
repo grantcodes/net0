@@ -1,23 +1,8 @@
 ---
-import Layout from '@layouts/Page.astro'
 import { getCollection } from 'astro:content'
-import { getRelativeLocaleUrl } from 'astro:i18n'
-const blogEntries = await getCollection('blog')
+import Archive from '@components/Archive.astro'
+import { getEntryLangFilter } from '@i18n/utils'
+const blogEntries = await getCollection('blog', getEntryLangFilter('es'))
 ---
 
-<Layout title="Blog">
-  <h1>Blog</h1>
-  <p>Aqui hay unos posts:</p>
-
-  <ol>
-    {
-      blogEntries.map((blogPostEntry) => (
-        <li>
-          <a href={getRelativeLocaleUrl('es', `blog/${blogPostEntry.slug}`)}>
-            {blogPostEntry.data.title}
-          </a>
-        </li>
-      ))
-    }
-  </ol>
-</Layout>
+<Archive title="Blog" entries={blogEntries} lang="es" urlPrependWith="blog" />
