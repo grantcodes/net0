@@ -19,7 +19,7 @@ const { title, entries, lang = defaultLang, urlPrependWith } = Astro.props
   <Hero title={title} center size="sm" />
 
   <div class="container" style="max-width: 40rem;">
-    <ol class="">
+    <ol>
       {
         entries.map((entry) => (
           <li>
@@ -27,20 +27,20 @@ const { title, entries, lang = defaultLang, urlPrependWith } = Astro.props
               href={getRelativeLocaleUrl(lang, entry.slug, {
                 prependWith: urlPrependWith,
               })}
-              >
+            >
               <h2>{entry.data.title}</h2>
-              <p>entry.body.substring(0, 100)}</p>
-           </Card> 
+              <p>{entry.body.substring(0, 100)}</p>
+            </Card>
           </li>
         ))
       }
     </ol>
   </div>
-
-  <style>
-    ol {
-      list-style-type: none;
-      padding: 0;
-    }
-  </style>
 </Layout>
+
+<style>
+  ol {
+    list-style-type: none;
+    padding: 0;
+  }
+</style>
