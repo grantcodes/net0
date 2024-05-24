@@ -6,14 +6,13 @@ const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
 ---
 
-<header class="net0-header">
+<header>
   <div class="container grid">
     <a href={translatePath('/')}>
       <img src="/favicon.svg" alt="Net0.1" width="60" height="60" />
     </a>
 
     <nav>
-      <div></div>
       <ul>
         <li>
           <a href={translatePath('/docs')}>{t('header.docs')}</a>
@@ -27,7 +26,7 @@ const translatePath = useTranslatedPath(lang)
 </header>
 
 <style>
-  .net0-header {
+  header {
     --pico-nav-element-spacing-vertical: 0.25rem;
     --pico-block-spacing-vertical: 0.5rem;
 
@@ -43,8 +42,28 @@ const translatePath = useTranslatedPath(lang)
     );
     border-block-end: 1px solid var(--pico-muted-border-color);
   }
+ 
+  header .grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--pico-block-spacing-vertical);
+  }
 
-  .net0-header a {
+  header nav ul {
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 768px) {
+    header nav {
+      margin-inline-start: auto;
+    }
+  }
+  
+  header a {
     display: block;
   }
+
+  header
 </style>
