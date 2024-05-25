@@ -4,13 +4,10 @@ interface Props {
 }
 
 import { getLangFromUrl } from '@i18n/utils'
+// Pico jade theme
+import '@picocss/pico/css/pico.jade.min.css'
 
 const lang = getLangFromUrl(Astro.url)
-
-// Pico jade theme elements
-import '@picocss/pico/css/pico.jade.min.css'
-// Custom variables for the site
-// import '@styles/variables.css'
 const { title } = Astro.props
 ---
 
@@ -26,7 +23,7 @@ const { title } = Astro.props
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="Your Site's Title"
+      title={title}
       href={`${Astro.site}/feeds/rss.xml`}
     />
     <title>{title}</title>
