@@ -1,4 +1,4 @@
-# Sustainable Web Starter Kit
+# Net0.1
 
 > [!NOTE]
 > This is currently a work in progress, and not intended for public use.
@@ -6,6 +6,7 @@
 The goal for this project is to create a free to use starter kit for creating low emission, sustainable websites.
 
 ## Requirements
+
 There are a number of important requirements for the project:
 
 1. It should be easy for developers to use and extend
