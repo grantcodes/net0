@@ -7,7 +7,7 @@ const IGNORED_RESOURCES = [
   /\/node_modules\/.vite/,
   /\/@vite\/client/,
   /\/@id\/astro/,
-  /\/toolbar\/app.ts/,
+  /\/toolbar\/*/,
 ]
 
 class AstroCo2 extends HTMLElement {
@@ -85,6 +85,10 @@ class AstroCo2 extends HTMLElement {
         th.amount {
           font-family: inherit;
         }
+       
+        .warning {
+          color: #f00;
+        }
       </style>
         <h2>Page total CO2 ${totalCo2.toFixed(3)}g</h2>
         ${pageCo2
@@ -112,12 +116,14 @@ class AstroCo2 extends HTMLElement {
                     ${category.resources
                       .map(
                         (resource) => `
-                      <tr>
+                      <tr class="${resource.co2 > 1 ? 'warning' : ''}">
                         <td>${resource.name.replace(
                           window.location.origin,
                           ''
                         )}</td>
-                        <td class="amount">${resource.bytes} bytes</td>
+                        <td class="amount">${resource.sizeString} ${
+                          resource.isEstimated ? `(estimate)` : ''
+                        }</td>
                         <td class="amount">${resource.co2.toFixed(3)}g</td>
                       </tr>
                     `
@@ -137,9 +143,32 @@ window.customElements.define('astro-co2', AstroCo2)
 
 export default defineToolbarApp({
   init(canvas, app, server) {
-    const container = document.createElement('astro-dev-toolbar-window')
-    const astroCo2 = document.createElement('astro-co2')
-    container.appendChild(astroCo2)
-    canvas.append(container)
+    const load = () => {
+      // Add the UI.
+      const container = document.createElement('astro-dev-toolbar-window')
+      const astroCo2 = document.createElement('astro-co2')
+      container.appendChild(astroCo2)
+      canvas.append(container)
+
+      // Check the total CO2 and show any warnings.
+      const pageCo2 = getPageCo2()
+      const totalCo2 = pageCo2.reduce(
+        (total, category) => total + category.totalCo2,
+        0
+      )
+      if (totalCo2 > 1) {
+        app.toggleNotification({
+          state: true,
+          level: 'warning',
+        })
+      }
+    }
+
+    // Load the UI when the page is loaded.
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', () => setTimeout(load, 3000))
+    } else {
+      setTimeout(load, 3000)
+    }
   },
 })
