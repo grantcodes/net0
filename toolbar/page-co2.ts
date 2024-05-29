@@ -8,23 +8,62 @@ const IGNORED_RESOURCES = [
   /\/node_modules\/.vite/,
   /\/@vite\/client/,
   /\/@id\/astro/,
-  /\/toolbar\/app.ts/,
+  /\/toolbar\/*/,
 ]
 
 const co2Emission = new co2()
 
+// @ts-ignore
+let speedEstimate = navigator?.connection?.downlink ?? 0
+
 class Resource {
-  name: string
-  bytes: number
-  duration: number
+  _entry: PerformanceResourceTiming | PerformanceNavigationTiming
+  isEstimated: boolean = false
 
   constructor(entry: PerformanceResourceTiming | PerformanceNavigationTiming) {
-    this.name = entry.name
-    this.bytes = entry.encodedBodySize
-    this.duration = entry.duration
+    this._entry = entry
   }
 
-  get isExternal() {
+  get name(): string {
+    return this._entry.name
+  }
+
+  get duration(): number {
+    return this._entry.duration
+  }
+
+  get bytes(): number {
+    // Pick the largest size from the various size properties
+    const maxSize = Math.max(
+      this._entry.encodedBodySize,
+      this._entry.decodedBodySize,
+      this._entry.transferSize
+    )
+    if (maxSize) {
+      return maxSize
+    }
+
+    if (speedEstimate && this._entry.duration) {
+      this.isEstimated = true
+      return Math.round(speedEstimate * this._entry.duration)
+    }
+
+    return 0
+  }
+
+  get sizeString(): string {
+    if (this.bytes < 1024) {
+      return `${this.bytes} B`
+    }
+    const kb = this.bytes / 1024
+    if (kb < 1024) {
+      return `${kb.toFixed(2)} KB`
+    }
+    const mb = kb / 1024
+    return `${mb.toFixed(2)} MB`
+  }
+
+  get isExternal(): boolean {
     return !this.name.startsWith(location.origin)
   }
 
@@ -46,10 +85,6 @@ class ResourceCategory {
   }
 
   addEntry(entry: PerformanceResourceTiming | PerformanceNavigationTiming) {
-    // Ignore if no encodedBodySize
-    if (!entry.encodedBodySize) {
-      return
-    }
     // Ignore if already in resources
     if (this._resources.some((resource) => resource.name === entry.name)) {
       return
@@ -162,6 +197,10 @@ function getPerformanceResources(): ResourceCategory[] {
     // Get the category for this entry
     const category = getPerformanceEntryResouceCategory(entry)
     const resourceCategory = resourceCategories.find((c) => c.id === category)
+
+    if (!speedEstimate && entry.transferSize && entry.duration) {
+      speedEstimate = entry.transferSize / entry.duration / 1024
+    }
 
     resourceCategory.addEntry(entry)
   }
