@@ -33,8 +33,14 @@ class Resource {
   }
 
   get bytes(): number {
-    if (this._entry.transferSize) {
-      return this._entry.transferSize
+    // Pick the largest size from the various size properties
+    const maxSize = Math.max(
+      this._entry.encodedBodySize,
+      this._entry.decodedBodySize,
+      this._entry.transferSize
+    )
+    if (maxSize) {
+      return maxSize
     }
 
     if (speedEstimate && this._entry.duration) {
@@ -173,11 +179,6 @@ function getPerformanceResources(): ResourceCategory[] {
 
   // Get all performance entries
   const performanceEntries = performance.getEntries()
-
-  console.log(
-    'performanceEntries',
-    performanceEntries.filter((entry) => entry.name.includes('youtube'))
-  )
 
   for (const entry of performanceEntries) {
     // We only want a couple of sub types of entries.
