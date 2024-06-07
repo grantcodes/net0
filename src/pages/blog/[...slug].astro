@@ -18,9 +18,13 @@ if (!entry) {
   throw new Error('No entry provided')
 }
 const { Content } = await entry.render()
+const metadata = {
+  title: entry.data.title,
+  description: entry.data.description,
+}
 ---
 
-<Layout title={entry.data.title}>
+<Layout metadata={metadata}>
   <article style="background: none;">
     <Hero title={entry.data.title} center />
     <div class="container" style="max-width: 34rem">
