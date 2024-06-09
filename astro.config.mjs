@@ -2,7 +2,8 @@ import { defineConfig } from 'astro/config'
 import starlight from '@astrojs/starlight'
 
 import sitemap from '@astrojs/sitemap'
-import net0Integration from './toolbar/integration.ts'
+import net0Integration from './integrations/toolbar/integration.ts'
+import net0OgImagesIntegration from './integrations/og-images/integration.ts'
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,6 +18,7 @@ export default defineConfig({
   },
   integrations: [
     net0Integration,
+    net0OgImagesIntegration,
     starlight({
       defaultLocale: 'root',
       logo: {
