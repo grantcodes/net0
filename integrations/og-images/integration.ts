@@ -3,9 +3,10 @@ import { Resvg } from '@resvg/resvg-js'
 import { readFile, writeFile } from 'node:fs/promises'
 import type { AstroIntegration } from 'astro'
 
+const defaultTitleTemplate = '%s | Net0.1'
 const favicon = await readFile('./public/favicon.svg')
 const font = await readFile(
-  './node_modules/@fontsource/onest/files/onest-latin-400-normal.woff'
+  './node_modules/@fontsource/lexend/files/lexend-latin-400-normal.woff'
 )
 
 const render = (title: string, description?: string) => ({
@@ -19,7 +20,7 @@ const render = (title: string, description?: string) => ({
       backgroundColor: '#13171f',
       padding: '55px 70px',
       color: '#f0f1f3',
-      fontFamily: 'Onest',
+      fontFamily: 'Lexend',
       fontSize: 72,
     },
     children: [
@@ -68,7 +69,11 @@ export default {
               .toString()
               .match(/<meta name="description" content="(.*?)"/)
 
-            const title = titleQuery ? titleQuery[1] : ''
+            const titleWithTemplate = titleQuery ? titleQuery[1] : ''
+            const title = titleWithTemplate.replace(
+              defaultTitleTemplate.replace('%s', ''),
+              ''
+            )
             const description = descriptionQuery ? descriptionQuery[1] : ''
 
             const svg = await satori(render(title, description), {
@@ -76,7 +81,7 @@ export default {
               height: 630,
               fonts: [
                 {
-                  name: 'Onest',
+                  name: 'Lexend',
                   data: font,
                   weight: 400,
                   style: 'normal',

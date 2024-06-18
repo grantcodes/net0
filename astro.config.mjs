@@ -35,6 +35,7 @@ export default defineConfig({
       },
       customCss: [
         '@picocss/pico/css/pico.conditional.jade.min.css',
+        './src/styles/style.css',
         './src/styles/docs.css',
       ],
       editLink: {

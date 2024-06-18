@@ -1,5 +1,7 @@
 /* Dark mode colors. */
 :root {
+  /* Custom font */
+  --sl-font: var(--pico-font-family-sans-serif);
   /* General colors */
   --sl-color-accent-low: var(--pico-primary-inverse);
   --sl-color-accent: var(--pico-primary);
