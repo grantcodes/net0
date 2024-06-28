@@ -1,13 +1,14 @@
 ---
 import { SEO } from 'astro-seo'
 import type { Props as SeoProps } from 'astro-seo'
+import { TITLE, META_TITLE_TEMPLATE } from 'astro:env/server'
 
 export interface Props extends SeoProps {}
 
 const defaultProps: Props = {
-  title: 'Net0.1',
+  title: TITLE,
   description: 'A starter template for building sustainable websites.',
-  titleTemplate: '%s | Net0.1',
+  titleTemplate: META_TITLE_TEMPLATE,
   charset: 'UTF-8',
   twitter: {
     site: '@grantcodes',

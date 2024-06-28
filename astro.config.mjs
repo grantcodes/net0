@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, envField } from 'astro/config'
 import starlight from '@astrojs/starlight'
 
 import sitemap from '@astrojs/sitemap'
@@ -20,15 +20,8 @@ export default defineConfig({
     net0Integration,
     net0OgImagesIntegration,
     starlight({
-      defaultLocale: 'root',
       logo: {
         src: './public/favicon.svg',
-      },
-      locales: {
-        root: {
-          label: 'English',
-          lang: 'en',
-        },
       },
       title: {
         en: 'Net0.1',
@@ -60,4 +53,20 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+  experimental: {
+    env: {
+      schema: {
+        TITLE: envField.string({
+          context: 'server',
+          access: 'public',
+          default: 'Net0.1',
+        }),
+        META_TITLE_TEMPLATE: envField.string({
+          context: 'server',
+          access: 'public',
+          default: '%s | Net0.1',
+        }),
+      },
+    },
+  },
 })

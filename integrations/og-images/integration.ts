@@ -2,8 +2,9 @@ import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 import { readFile, writeFile } from 'node:fs/promises'
 import type { AstroIntegration } from 'astro'
+import { META_TITLE_TEMPLATE } from 'astro:env/server'
 
-const defaultTitleTemplate = '%s | Net0.1'
+const defaultTitleTemplate = META_TITLE_TEMPLATE
 const favicon = await readFile('./public/favicon.svg')
 const font = await readFile(
   './node_modules/@fontsource/lexend/files/lexend-latin-400-normal.woff'
