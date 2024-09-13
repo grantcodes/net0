@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "@tgwf/co2": "^0.15.0",
-    "satori": "^0.10.13"
+    "satori": "^0.10.13",
+    "@tgwf/co2": "^0.16.1"
   }
 }
