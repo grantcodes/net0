@@ -22,12 +22,6 @@ export default defineConfig({
       logo: {
         src: './public/favicon.svg',
       },
-      locales: {
-        root: {
-          label: 'English',
-          lang: 'en',
-        },
-      },
       title: {
         en: 'Net0.1',
       },
