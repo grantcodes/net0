@@ -2,9 +2,10 @@
 import Layout from '@layouts/Page.astro'
 import Hero from '@components/Hero.astro'
 import Card from '@components/Card.astro'
+import * as m from '@i18n/messages.js'
 ---
 
-<Layout title="Net0.1">
+<Layout title={m.meta_title()}>
   <Hero title="Hola" text="" button="Empezar" href="/docs/get-started" center />
   <div class="grid container">
     <Card />

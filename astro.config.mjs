@@ -1,8 +1,19 @@
 import { defineConfig } from 'astro/config'
 import starlight from '@astrojs/starlight'
-
 import sitemap from '@astrojs/sitemap'
 import net0Integration from './toolbar/integration.ts'
+import paraglide from '@inlang/paraglide-astro'
+import * as m from './src/i18n/messages.js'
+import net0Integration from './integrations/toolbar/integration.ts'
+import net0OgImagesIntegration from './integrations/og-images/integration.ts'
+
+const GITHUB = m.social_github()
+
+const starlightEditLink = GITHUB ? { baseUrl: `${GITHUB}/edit/main/` } : {}
+const starlightSocial = {}
+if (GITHUB) {
+  starlightSocial.github = GITHUB
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,6 +28,11 @@ export default defineConfig({
   },
   integrations: [
     net0Integration,
+    net0OgImagesIntegration,
+    paraglide({
+      project: './project.inlang',
+      outdir: './src/i18n',
+    }),
     starlight({
       defaultLocale: 'root',
       logo: {
@@ -29,15 +45,13 @@ export default defineConfig({
         },
       },
       title: {
-        en: 'Net0.1',
+        en: m.meta_title(),
       },
       customCss: [
         '@picocss/pico/css/pico.conditional.jade.min.css',
         './src/styles/docs.css',
       ],
-      editLink: {
-        baseUrl: 'https://github.com/grantcodes/net0/edit/main/',
-      },
+      editLink: starlightEditLink,
       sidebar: [
         // { label: 'Getting started', link: '/getting-started/' },
         {
@@ -51,9 +65,7 @@ export default defineConfig({
         },
         { label: 'Tech choices', link: '/docs/tech-choices/' },
       ],
-      social: {
-        github: 'https://github.com/grantcodes/net0',
-      },
+      social: starlightSocial,
     }),
     sitemap(),
   ],

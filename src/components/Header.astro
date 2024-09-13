@@ -1,24 +1,24 @@
 ---
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils'
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languageTag } from "@i18n/runtime.js"
+import * as m from "@i18n/messages.js"
 
-const lang = getLangFromUrl(Astro.url)
-const t = useTranslations(lang)
-const translatePath = useTranslatedPath(lang)
+const lang = languageTag()
 ---
 
 <header>
   <div class="container grid">
-    <a href={translatePath('/')}>
-      <img src="/favicon.svg" alt="Net0.1" width="60" height="60" />
+    <a href={getRelativeLocaleUrl(lang, '/')}>
+      <img src="/favicon.svg" alt={m.meta_title()} width="60" height="60" />
     </a>
 
     <nav>
       <ul>
         <li>
-          <a href={translatePath('/docs')}>{t('header.docs')}</a>
+          <a href={getRelativeLocaleUrl(lang, '/docs')}>{m.header_docs()}</a>
         </li>
         <li>
-          <a href={translatePath('/blog')}>{t('header.blog')}</a>
+          <a href={getRelativeLocaleUrl(lang, '/blog')}>{m.header_blog()}</a>
         </li>
       </ul>
     </nav>

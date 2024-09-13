@@ -3,16 +3,17 @@ interface Props {
   title: string
 }
 
-import { getLangFromUrl } from '@i18n/utils'
 // Pico jade theme
 import '@picocss/pico/css/pico.jade.min.css'
 
-const lang = getLangFromUrl(Astro.url)
 const { title } = Astro.props
+// Pico jade theme
+import '@picocss/pico/css/pico.jade.min.css'
+import '@styles/style.css'
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={Astro.locals.paraglide.lang} dir={Astro.locals.paraglide.dir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />

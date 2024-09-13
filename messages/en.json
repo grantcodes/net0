@@ -1,0 +1,12 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "meta_title": "Net0.1",
+  "meta_titleTemplate": "%s | Net0.1",
+  "meta_description": "A starter template for sustainable web development, made with love by grant.codes",
+  "social_x": "https://twitter.com/grantcodes",
+  "social_github": "https://github.com/grantcodes/net0",
+  "header_home": "Home",
+  "header_about": "About",
+  "header_docs": "Docs",
+  "header_blog": "Blog"
+}

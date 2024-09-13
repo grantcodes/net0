@@ -1,0 +1,39 @@
+---
+import { SEO } from 'astro-seo'
+import type { Props as SeoProps } from 'astro-seo'
+import * as m from '@i18n/messages.js'
+
+export interface Props extends SeoProps {}
+
+const defaultProps: Props = {
+  title: m.meta_title(),
+  description: m.meta_description(),
+  titleTemplate: m.meta_titleTemplate(),
+  charset: 'UTF-8',
+  twitter: {
+    site: '@' + m.social_x(),
+    creator: '@' + m.social_x(),
+  },
+}
+
+const seoProps = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { title } = seoProps
+---
+
+<>
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="generator" content={Astro.generator} />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title={title}
+    href={`${Astro.site}/feeds/rss.xml`}
+  />
+  <SEO {...seoProps} />
+</>

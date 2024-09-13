@@ -1,10 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils'
-
-const lang = getLangFromUrl(Astro.url)
-const t = useTranslations(lang)
-const translatePath = useTranslatedPath(lang)
+import * as m from '@i18n/messages.js'
 ---
 
 <footer>
@@ -12,9 +8,9 @@ const translatePath = useTranslatedPath(lang)
     <div class="grid">
       <div class="footer__info">
         <h4>
-          <a href={getRelativeLocaleUrl('en', '')}>{t('footer.title')}</a>
+          <a href={getRelativeLocaleUrl('en', '')}>{m('footer.title')}</a>
         </h4>
-        <p>{t('footer.description')}</p>
+        <p>{m('footer.description')}</p>
       </div>
 
       <nav>
