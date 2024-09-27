@@ -13,9 +13,11 @@ interface Props {
 }
 
 const { title, entries, lang = defaultLang, urlPrependWith } = Astro.props
+
+const metadata = { title }
 ---
 
-<Layout title={title}>
+<Layout metadata={metadata}>
   <Hero title={title} center size="sm" />
 
   <div class="container" style="max-width: 40rem;">

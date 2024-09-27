@@ -3,6 +3,12 @@ import Layout from '@layouts/Page.astro'
 import Hero from '@components/Hero.astro'
 import Card from '@components/Card.astro'
 
+const metadata = {
+  title: 'Resources',
+  description:
+    'A collection of useful resources to help you build a more sustainable web.',
+}
+
 const resourceGroups = [
   {
     title: 'Guides & Standards',
@@ -212,11 +218,8 @@ const resourceGroups = [
 ]
 ---
 
-<Layout title={import.meta.env.TITLE}>
-  <Hero
-    title="Resources"
-    text="A collection of useful resources to help you build a more sustainable web."
-  />
+<Layout metadata={metadata}>
+  <Hero title={metadata.title} text={metadata.description} />
   <div class="container">
     {
       resourceGroups.map((group) => (

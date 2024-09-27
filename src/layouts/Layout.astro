@@ -1,42 +1,32 @@
 ---
-interface Props {
-  title: string
-}
-
 import { getLangFromUrl } from '@i18n/utils'
+import Meta from '@components/common/Meta.astro'
+import type { Props as MetaProps } from '@components/common/Meta.astro'
 // Pico jade theme
 import '@picocss/pico/css/pico.jade.min.css'
+import '@styles/style.css'
+
+export interface Props {
+  metadata: MetaProps
+}
 
 const lang = getLangFromUrl(Astro.url)
-const { title } = Astro.props
+const { metadata } = Astro.props
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="generator" content={Astro.generator} />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={title}
-      href={`${Astro.site}/feeds/rss.xml`}
-    />
-    <title>{title}</title>
+    <Meta {...metadata} />
   </head>
   <body>
     <slot />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+      }
+    </style>
   </body>
 </html>
-
-<style>
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
-  }
-</style>

@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
+import { TITLE } from 'astro:env/server'
 
 export async function GET(context) {
   const blog = await getCollection('blog')
@@ -17,7 +18,7 @@ export async function GET(context) {
   }
 
   return rss({
-    title: 'Net0.1 Blog',
+    title: `${TITLE} Blog`,
     description: 'A humble Astronaut’s guide to the stars',
     site: context.site,
     items: blog.map(getItem),

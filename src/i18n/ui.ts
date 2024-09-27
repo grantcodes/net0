@@ -1,3 +1,5 @@
+import { TITLE } from 'astro:env/server'
+
 export const languages = {
   en: 'English',
   es: 'Español',
@@ -9,7 +11,7 @@ export const ui = {
     'header.about': 'About',
     'header.docs': 'Docs',
     'header.blog': 'Blog',
-    'footer.title': 'Net0.1',
+    'footer.title': TITLE,
     'footer.description':
       'A starter template for sustainable web development, made with love by grant.codes',
   },

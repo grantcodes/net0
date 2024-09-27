@@ -1,0 +1,51 @@
+---
+import { SEO } from 'astro-seo'
+import type { Props as SeoProps } from 'astro-seo'
+import {
+  TITLE,
+  META_TITLE_TEMPLATE,
+  META_DESCRIPTION,
+  META_TWITTER,
+} from 'astro:env/server'
+
+export interface Props extends SeoProps {}
+
+const defaultProps: Props = {
+  title: TITLE,
+  description: META_DESCRIPTION,
+  titleTemplate: META_TITLE_TEMPLATE,
+  charset: 'UTF-8',
+  openGraph: {
+    basic: {
+      title: TITLE,
+      type: 'website',
+      image: './og.png',
+    },
+  },
+  twitter: {
+    site: META_TWITTER,
+    creator: META_TWITTER,
+  },
+}
+
+const seoProps = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { title } = seoProps
+---
+
+<>
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="generator" content={Astro.generator} />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title={title}
+    href={`${Astro.site}feeds/rss.xml`}
+  />
+  <SEO {...seoProps} />
+</>

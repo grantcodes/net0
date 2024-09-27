@@ -1,16 +1,15 @@
 ---
-interface Props {
-  title: string
-}
-
 import BaseLayout from './Layout.astro'
-import Header from '../components/Header.astro'
-import Footer from '../components/Footer.astro'
-const { title } = Astro.props
+import Header from '@components/Header.astro'
+import Footer from '@components/Footer.astro'
+import type { Props as LayoutProps } from './Layout.astro'
+
+export interface Props extends LayoutProps {}
+const { metadata } = Astro.props
 ---
 
 <!doctype html>
-<BaseLayout title={title}>
+<BaseLayout metadata={metadata}>
   <Header />
   <main>
     <slot />
