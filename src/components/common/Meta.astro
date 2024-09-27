@@ -1,17 +1,30 @@
 ---
 import { SEO } from 'astro-seo'
 import type { Props as SeoProps } from 'astro-seo'
+import {
+  TITLE,
+  META_TITLE_TEMPLATE,
+  META_DESCRIPTION,
+  META_TWITTER,
+} from 'astro:env/server'
 
 export interface Props extends SeoProps {}
 
 const defaultProps: Props = {
-  title: 'Net0.1',
-  description: 'A starter template for building sustainable websites.',
-  titleTemplate: '%s | Net0.1',
+  title: TITLE,
+  description: META_DESCRIPTION,
+  titleTemplate: META_TITLE_TEMPLATE,
   charset: 'UTF-8',
+  openGraph: {
+    basic: {
+      title: TITLE,
+      type: 'website',
+      image: './og.png',
+    },
+  },
   twitter: {
-    site: '@grantcodes',
-    creator: '@grantcodes',
+    site: META_TWITTER,
+    creator: META_TWITTER,
   },
 }
 
@@ -32,7 +45,7 @@ const { title } = seoProps
     rel="alternate"
     type="application/rss+xml"
     title={title}
-    href={`${Astro.site}/feeds/rss.xml`}
+    href={`${Astro.site}feeds/rss.xml`}
   />
   <SEO {...seoProps} />
 </>

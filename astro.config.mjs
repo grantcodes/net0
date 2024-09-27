@@ -1,8 +1,9 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, envField } from 'astro/config'
 import starlight from '@astrojs/starlight'
-
 import sitemap from '@astrojs/sitemap'
-import net0Integration from './toolbar/integration.ts'
+import { envDefaults } from './integrations/env-defaults.ts'
+import net0Integration from './integrations/toolbar/integration.ts'
+import net0OgImagesIntegration from './integrations/og-images/integration.ts'
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,22 +18,17 @@ export default defineConfig({
   },
   integrations: [
     net0Integration,
+    net0OgImagesIntegration,
     starlight({
-      defaultLocale: 'root',
       logo: {
         src: './public/favicon.svg',
-      },
-      locales: {
-        root: {
-          label: 'English',
-          lang: 'en',
-        },
       },
       title: {
         en: 'Net0.1',
       },
       customCss: [
         '@picocss/pico/css/pico.conditional.jade.min.css',
+        './src/styles/style.css',
         './src/styles/docs.css',
       ],
       editLink: {
@@ -57,4 +53,50 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+  experimental: {
+    env: {
+      schema: {
+        TITLE: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.TITLE,
+        }),
+        META_TITLE_TEMPLATE: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.META_TITLE_TEMPLATE,
+        }),
+        META_DESCRIPTION: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.META_DESCRIPTION,
+        }),
+        META_TWITTER: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.META_TWITTER,
+        }),
+        OG_IMAGE_COLOR: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.OG_IMAGE_COLOR,
+        }),
+        OG_IMAGE_BACKGROUND_COLOR: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.TITLE,
+        }),
+        OG_IMAGE_FONT_NAME: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.OG_IMAGE_BACKGROUND_COLOR,
+        }),
+        OG_IMAGE_FONT_FILE: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.OG_IMAGE_FONT_FILE,
+        }),
+      },
+    },
+  },
 })

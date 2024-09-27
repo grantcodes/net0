@@ -1,4 +1,5 @@
 ---
+import { TITLE } from 'astro:env/server'
 import Layout from '@layouts/Page.astro'
 import Hero from '@components/Hero.astro'
 import Card from '@components/Card.astro'
@@ -11,7 +12,7 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <Hero
-    title="Net0.1"
+    title={TITLE}
     text="A starter template for building sustainable websites."
     button="Get started"
     href="/docs/getting-started"

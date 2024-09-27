@@ -10,14 +10,18 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.6",
-    "@astrojs/sitemap": "^3.1.5",
-    "@astrojs/starlight": "^0.23.1",
+    "@astrojs/rss": "^4.0.7",
+    "@astrojs/sitemap": "^3.1.6",
+    "@astrojs/starlight": "^0.27.1",
+    "@fontsource-variable/lexend": "^5.1.0",
+    "@fontsource/lexend": "^5.1.0",
     "@picocss/pico": "^2.0.6",
-    "astro": "^4.8.7",
+    "astro": "^4.15.5",
     "astro-seo": "^0.8.4"
   },
   "devDependencies": {
-    "@tgwf/co2": "^0.15.0"
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.11.1",
+    "@tgwf/co2": "^0.16.1"
   }
 }
