@@ -1,14 +1,23 @@
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
-import { readFile, writeFile } from 'node:fs/promises'
+import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import type { AstroIntegration } from 'astro'
-import { META_TITLE_TEMPLATE } from 'astro:env/server'
+import { loadEnv } from 'vite'
+import { envDefaults } from '../env-defaults.ts'
 
+// Manually load the environment variables since this is a config file.
+const {
+  META_TITLE_TEMPLATE = envDefaults.META_TITLE_TEMPLATE,
+  OG_IMAGE_BACKGROUND_COLOR = envDefaults.OG_IMAGE_BACKGROUND_COLOR,
+  OG_IMAGE_COLOR = envDefaults.OG_IMAGE_COLOR,
+  OG_IMAGE_FONT_NAME = envDefaults.OG_IMAGE_FONT_NAME,
+  OG_IMAGE_FONT_FILE = envDefaults.OG_IMAGE_FONT_FILE,
+} = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 const defaultTitleTemplate = META_TITLE_TEMPLATE
-const favicon = await readFile('./public/favicon.svg')
-const font = await readFile(
-  './node_modules/@fontsource/lexend/files/lexend-latin-400-normal.woff'
-)
+
+// Load the favicon and font files.
+const favicon = readFileSync('./public/favicon.svg')
+const font = readFileSync(OG_IMAGE_FONT_FILE)
 
 const render = (title: string, description?: string) => ({
   type: 'div',
@@ -18,10 +27,10 @@ const render = (title: string, description?: string) => ({
       width: '100%',
       display: 'flex',
       flexDirection: 'column',
-      backgroundColor: '#13171f',
+      color: OG_IMAGE_COLOR,
+      backgroundColor: OG_IMAGE_BACKGROUND_COLOR,
       padding: '55px 70px',
-      color: '#f0f1f3',
-      fontFamily: 'Lexend',
+      fontFamily: OG_IMAGE_FONT_NAME,
       fontSize: 72,
     },
     children: [
@@ -62,9 +71,25 @@ export default {
           // Only generate OG images for index.html pages.
           if (route.distURL?.pathname?.endsWith('index.html') ?? false) {
             // Pull out metadata from the compiled html file
-            const html = await readFile(route.distURL ?? '', {
+            const html = readFileSync(route.distURL ?? '', {
               encoding: 'utf-8',
             })
+
+            // If the OG image meta tag is not found, do not generate an image.
+            const ogMetaQuery = html
+              .toString()
+              .match(/<meta property="og:image" content="(.*?)"/)
+            if (!ogMetaQuery) {
+              continue
+            }
+
+            // If there is already an existing OG image, do not overwrite it.
+            if (
+              existsSync(route.distURL.pathname.replace('index.html', 'og.png'))
+            ) {
+              continue
+            }
+
             const titleQuery = html.toString().match(/<title>(.*?)<\/title>/)
             const descriptionQuery = html
               .toString()
@@ -82,7 +107,7 @@ export default {
               height: 630,
               fonts: [
                 {
-                  name: 'Lexend',
+                  name: OG_IMAGE_FONT_NAME,
                   data: font,
                   weight: 400,
                   style: 'normal',
@@ -97,7 +122,7 @@ export default {
               },
             })
 
-            writeFile(
+            writeFileSync(
               route.distURL.pathname.replace('index.html', 'og.png'),
               resvg.render().asPng()
             )

@@ -1,7 +1,7 @@
 import { defineConfig, envField } from 'astro/config'
 import starlight from '@astrojs/starlight'
-
 import sitemap from '@astrojs/sitemap'
+import { envDefaults } from './integrations/env-defaults.ts'
 import net0Integration from './integrations/toolbar/integration.ts'
 import net0OgImagesIntegration from './integrations/og-images/integration.ts'
 
@@ -59,12 +59,42 @@ export default defineConfig({
         TITLE: envField.string({
           context: 'server',
           access: 'public',
-          default: 'Net0.1',
+          default: envDefaults.TITLE,
         }),
         META_TITLE_TEMPLATE: envField.string({
           context: 'server',
           access: 'public',
-          default: '%s | Net0.1',
+          default: envDefaults.META_TITLE_TEMPLATE,
+        }),
+        META_DESCRIPTION: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.META_DESCRIPTION,
+        }),
+        META_TWITTER: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.META_TWITTER,
+        }),
+        OG_IMAGE_COLOR: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.OG_IMAGE_COLOR,
+        }),
+        OG_IMAGE_BACKGROUND_COLOR: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.TITLE,
+        }),
+        OG_IMAGE_FONT_NAME: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.OG_IMAGE_BACKGROUND_COLOR,
+        }),
+        OG_IMAGE_FONT_FILE: envField.string({
+          context: 'server',
+          access: 'public',
+          default: envDefaults.OG_IMAGE_FONT_FILE,
         }),
       },
     },
