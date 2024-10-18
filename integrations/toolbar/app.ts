@@ -1,7 +1,9 @@
 import { defineToolbarApp } from 'astro/toolbar'
-import { getPageCo2 } from './page-co2'
+import {Footprint} from "@grantcodes/footprint"
 
-const IGNORED_RESOURCES = [
+const footprint = new Footprint(performance)
+
+footprint.ignored = [
   /\/node_modules\/astro/,
   /\/node_modules\/vite/,
   /\/node_modules\/.vite/,
@@ -9,7 +11,6 @@ const IGNORED_RESOURCES = [
   /\/@id\/astro/,
   /\/toolbar\/*/,
 ]
-
 class AstroCo2 extends HTMLElement {
   constructor() {
     super()
@@ -17,11 +18,21 @@ class AstroCo2 extends HTMLElement {
   }
 
   async connectedCallback() {
-    const pageCo2 = getPageCo2()
-    const totalCo2 = pageCo2.reduce(
-      (total, category) => total + category.totalCo2,
-      0
-    )
+    const allResources = footprint.resources
+    const totalCo2 = allResources.totalCo2
+
+    const htmlResources = footprint.getByCategory('html')
+    const cssResources = footprint.getByCategory('css')
+    const jsResources = footprint.getByCategory('js')
+    const imageResources = footprint.getByCategory('media')
+    const otherResources = footprint.getByCategory('other')
+    const categories = [
+      { name: 'HTML',description: 'The base html document', resources: htmlResources },
+      { name: 'CSS',description: 'First and 3rd party CSS loaded on th`is page', resources: cssResources },
+      { name: 'JavaScript',description: 'First and 3rd party JavaScript loaded on this page', resources: jsResources },
+      { name: 'Images',description: 'Images loaded on this page', resources: imageResources },
+      { name: 'Other',description: 'Everything else, and anything this tool failed to recognize', resources: otherResources },
+    ]
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -91,8 +102,8 @@ class AstroCo2 extends HTMLElement {
         }
       </style>
         <h2>Page total CO2 ${totalCo2.toFixed(3)}g</h2>
-        ${pageCo2
-          .filter((category) => category.totalCo2 > 0)
+        ${categories
+          .filter((category) => category.resources.totalCo2 > 0)
           .map(
             (category) => `
               <details>
@@ -101,7 +112,7 @@ class AstroCo2 extends HTMLElement {
                     ${category.name}
                   </span>
                   <span class="amount">
-                    ${category.totalCo2.toFixed(3)}g
+                    ${category.resources.totalCo2.toFixed(3)}g
                   </span>
                 </summary>
                 <table>
@@ -151,11 +162,7 @@ export default defineToolbarApp({
       canvas.append(container)
 
       // Check the total CO2 and show any warnings.
-      const pageCo2 = getPageCo2()
-      const totalCo2 = pageCo2.reduce(
-        (total, category) => total + category.totalCo2,
-        0
-      )
+      const totalCo2 = footprint.resources.totalCo2
       if (totalCo2 > 1) {
         app.toggleNotification({
           state: true,
