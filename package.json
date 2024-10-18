@@ -20,8 +20,8 @@
     "astro-seo": "^0.8.4"
   },
   "devDependencies": {
+    "@grantcodes/footprint": "^1.0.8",
     "@resvg/resvg-js": "^2.6.2",
-    "satori": "^0.11.1",
-    "@tgwf/co2": "^0.16.1"
+    "satori": "^0.11.1"
   }
 }
