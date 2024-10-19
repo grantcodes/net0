@@ -2,8 +2,8 @@ import { defineConfig, envField } from 'astro/config'
 import starlight from '@astrojs/starlight'
 import sitemap from '@astrojs/sitemap'
 import { envDefaults } from './integrations/env-defaults.ts'
-import net0Integration from './integrations/toolbar/integration.ts'
 import net0OgImagesIntegration from './integrations/og-images/integration.ts'
+import footprintAstro from '@grantcodes/footprint-astro'
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   integrations: [
-    net0Integration,
+    footprintAstro,
     net0OgImagesIntegration,
     starlight({
       logo: {

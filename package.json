@@ -20,7 +20,7 @@
     "astro-seo": "^0.8.4"
   },
   "devDependencies": {
-    "@grantcodes/footprint": "^1.0.8",
+    "@grantcodes/footprint-astro": "^1.0.0",
     "@resvg/resvg-js": "^2.6.2",
     "satori": "^0.11.1"
   }
