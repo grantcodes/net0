@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils'
+import { GrantCodesContainer } from '@grantcodes/ui/components/container/container.component.js'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -8,7 +9,7 @@ const translatePath = useTranslatedPath(lang)
 ---
 
 <footer>
-  <div class="container">
+  <GrantCodesContainer align="wide">
     <div class="grid">
       <div class="footer__info">
         <h4>
@@ -30,17 +31,31 @@ const translatePath = useTranslatedPath(lang)
     <div id="wcb" class="carbonbadge wcb-d"></div>
     <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer
     ></script>
-  </div>
+  </GrantCodesContainer>
 </footer>
 
 <style>
   body > footer {
     padding-block: 4rem;
-    background: var(--pico-card-background-color);
+    background: var(--color-base-background-shade);
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-space-unit);
   }
 
   .footer__info {
     max-width: 20rem;
+  }
+
+  footer nav ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--size-space-unit);
+    margin: 0;
   }
 
   @media (min-width: 768px) {
@@ -51,8 +66,8 @@ const translatePath = useTranslatedPath(lang)
 </style>
 <style is:global>
   footer #wcb.carbonbadge {
-    --b1: var(--pico-primary-inverse);
-    --b2: var(--pico-primary);
+    --b1: var(--color-base-primary-500-inverse);
+    --b2: var(--color-base-primary-500);
 
     text-align: inherit;
     width: fit-content;
@@ -60,6 +75,6 @@ const translatePath = useTranslatedPath(lang)
 
   footer #wcb #wcb_g {
     background-color: inherit;
-    color: var(--pico-color);
+    color: var(--color-base-dark-main);
   }
 </style>

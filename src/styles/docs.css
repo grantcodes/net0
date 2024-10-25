@@ -1,22 +1,30 @@
 /* Dark mode colors. */
 :root {
   /* Custom font */
-  --sl-font: var(--pico-font-family-sans-serif);
+  --sl-font: var(--font-family-body);
   /* General colors */
-  --sl-color-accent-low: var(--pico-primary-inverse);
-  --sl-color-accent: var(--pico-primary);
-  --sl-color-accent-high: var(--pico-primary-background);
-  --sl-color-black: var(--pico-background-color);
-  font-size: 100%;
+  --sl-color-accent-low: var(--color-base-primary-100);
+  --sl-color-accent: var(--color-base-primary-500);
+  --sl-color-accent-high: var(--color-base-primary-400);
+  --sl-color-black: var(--color-base-dark-main);
 
   /* Specific element colors */
-  --sl-color-bg-sidebar: var(--pico-card-background-color);
-  --sl-color-bg-nav: var(--pico-card-background-color);
+  --sl-color-bg-nav: var(--color-base-dark-shade);
+  --sl-color-bg-sidebar: var(--color-base-dark-shade);
+
+  font-size: 100%;
 }
 
 /* Light mode colors */
 :root[data-theme='light'] {
-  --sl-color-accent-low: var(--pico-primary-background);
-  --sl-color-accent: var(--pico-primary);
-  --sl-color-accent-high: var(--pico-primary-inverse);
+  --sl-color-black: var(--color-base-background-main);
+  --sl-color-accent-low: var(--color-base-primary-400);
+  --sl-color-accent: var(--color-base-primary-500);
+  --sl-color-accent-high: var(--color-base-primary-600);
+
+  --sl-color-gray-6: var(--color-base-background-shade);
+
+    /* Specific element colors */
+    --sl-color-bg-nav: var(--color-base-background-main);
+    --sl-color-bg-sidebar: var(--color-base-background-main);
 }

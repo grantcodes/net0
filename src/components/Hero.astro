@@ -8,6 +8,9 @@ interface Props {
   center?: boolean
 }
 
+import { GrantCodesButton } from '@grantcodes/ui/components/button/button.component.js'
+import { GrantCodesContainer } from '@grantcodes/ui/components/container/container.component.js'
+
 const { title, text, button, href, size, center } = Astro.props
 
 const classes = ['hero']
@@ -20,32 +23,35 @@ if (size) {
 ---
 
 <section class={classes.join(' ')}>
-  <div class="container">
-    <h1 class="hero__title">{title}</h1>
-    {!!text && <p class="hero__text">{text}</p>}
+  <GrantCodesContainer align={center ? 'center' : 'wide'}>
+    <div class="container">
+      <h1 class="hero__title">{title}</h1>
+      {!!text && <p class="hero__text">{text}</p>}
 
-    {
-      href && button && (
-        <a role="button" href={href}>
-          {button}
-        </a>
-      )
-    }
-  </div>
+      {
+        href && button && (
+          <GrantCodesButton>
+            <a href={href}>{button}</a>
+          </GrantCodesButton>
+        )
+      }
+    </div>
+  </GrantCodesContainer>
 </section>
 
 <style>
   .hero {
     display: flex;
+    width: 100%;
+    justify-content: center;
     align-items: center;
     min-height: 50dvh;
     padding-block: 5rem;
-    text-align: center;
-    background-color: var(--pico-background-color);
+    background-color: var(--color-base-primary-200);
     background: radial-gradient(
       circle at 10% 90%,
-      var(--pico-background-color),
-      var(--pico-card-background-color)
+      var(--color-base-primary-200),
+      var(--color-base-background-main)
     );
     background-size: 100% 200%;
   }
@@ -57,6 +63,7 @@ if (size) {
   }
 
   .hero--center .container {
+    text-align: center;
     align-items: center;
   }
 
@@ -67,12 +74,13 @@ if (size) {
 
   .hero__title {
     width: fit-content;
+    margin-block-start: 0;
     font-weight: 900;
     color: transparent;
     background: linear-gradient(
       84deg,
-      var(--pico-primary),
-      var(--pico-secondary)
+      var(--color-base-primary-500),
+      var(--color-base-secondary-500)
     );
     background-clip: text;
   }

@@ -4,6 +4,7 @@ import Hero from '@components/Hero.astro'
 import Card from '@components/Card.astro'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { defaultLang } from '@i18n/ui'
+import { GrantCodesContainer } from '@grantcodes/ui/components/container/container.component.js'
 
 interface Props {
   title: string
@@ -20,7 +21,7 @@ const metadata = { title }
 <Layout metadata={metadata}>
   <Hero title={title} center size="sm" />
 
-  <div class="container" style="max-width: 40rem;">
+  <GrantCodesContainer>
     <ol>
       {
         entries.map((entry) => (
@@ -37,10 +38,13 @@ const metadata = { title }
         ))
       }
     </ol>
-  </div>
+  </GrantCodesContainer>
 </Layout>
 
 <style>
+  grantcodes-container {
+    padding-block: calc(var(--size-space-unit) * 4);
+  }
   ol {
     list-style-type: none;
     padding: 0;

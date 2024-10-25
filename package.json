@@ -10,14 +10,17 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/lit": "^4.3.0",
     "@astrojs/rss": "^4.0.7",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/starlight": "^0.27.1",
     "@fontsource-variable/lexend": "^5.1.0",
     "@fontsource/lexend": "^5.1.0",
-    "@picocss/pico": "^2.0.6",
+    "@grantcodes/ui": "^2.0.0-beta.3",
+    "@webcomponents/template-shadowroot": "^0.2.1",
     "astro": "^4.15.5",
-    "astro-seo": "^0.8.4"
+    "astro-seo": "^0.8.4",
+    "lit": "^3.2.1"
   },
   "devDependencies": {
     "@grantcodes/footprint-astro": "^1.0.0",

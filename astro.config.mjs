@@ -1,4 +1,5 @@
 import { defineConfig, envField } from 'astro/config'
+import lit from '@astrojs/lit';
 import starlight from '@astrojs/starlight'
 import sitemap from '@astrojs/sitemap'
 import { envDefaults } from './integrations/env-defaults.ts'
@@ -17,6 +18,7 @@ export default defineConfig({
     },
   },
   integrations: [
+    lit(), 
     footprintAstro,
     net0OgImagesIntegration,
     starlight({
@@ -27,7 +29,7 @@ export default defineConfig({
         en: 'Net0.1',
       },
       customCss: [
-        '@picocss/pico/css/pico.conditional.jade.min.css',
+        '@grantcodes/ui/styles/themes/grantcodes.css',
         './src/styles/style.css',
         './src/styles/docs.css',
       ],

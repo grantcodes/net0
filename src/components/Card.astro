@@ -1,4 +1,6 @@
 ---
+import { GrantCodesCard } from '@grantcodes/ui/components/card/card.component.js'
+
 interface Props {
   href?: string
 }
@@ -8,48 +10,29 @@ const { href } = Astro.props
 
 {
   href ? (
-    <a href={href} class="card">
-      <slot />
-    </a>
+    <GrantCodesCard>
+      <a href={href} slot="card-content" class="card__link">
+        <slot />
+      </a>
+    </GrantCodesCard>
   ) : (
-    <div class="card">
-      <slot />
-    </div>
+    <GrantCodesCard>
+      <slot slot="card-content" />
+    </GrantCodesCard>
   )
 }
 
 <style>
-  .card {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    margin-block: var(--pico-block-spacing-vertical);
-    padding: var(--pico-block-spacing-vertical)
-      var(--pico-block-spacing-horizontal);
-    border: 2px solid transparent;
-    border-radius: var(--pico-border-radius);
-    background: var(--pico-card-background-color);
-    box-shadow: var(--pico-card-box-shadow);
-    transition:
-      background-color 0.2s,
-      border-color 0.2s,
-      color 0.2s;
+  .card__link {
+    text-decoration: none !important;
   }
 
-  .card:link {
-    text-decoration: none;
+  grantcodes-card:has(.card__link:hover),
+  grantcodes-card:has(.card__link:focus-visible) {
+    --component-card-border-color: var(--color-base-primary-500);
   }
-  .card:hover:link,
-  .card:hover:visited {
-    border-color: var(--pico-primary);
-  }
-</style>
 
-<style is:global>
-  .card svg {
+  grantcodes-card svg {
     max-width: 5rem;
-  }
-  .card svg:first-child {
-    margin-block-end: 1rem;
   }
 </style>

@@ -2,6 +2,7 @@
 import Layout from '@layouts/Page.astro'
 import Hero from '@components/Hero.astro'
 import Card from '@components/Card.astro'
+import { GrantCodesContainer } from '@grantcodes/ui/components/container/container.component.js'
 
 const metadata = {
   title: 'Resources',
@@ -226,7 +227,7 @@ const resourceGroups = [
 
 <Layout metadata={metadata}>
   <Hero title={metadata.title} text={metadata.description} />
-  <div class="container">
+  <GrantCodesContainer align="wide">
     {
       resourceGroups.map((group) => (
         <>
@@ -245,11 +246,14 @@ const resourceGroups = [
         </>
       ))
     }
-  </div>
+  </GrantCodesContainer>
 </Layout>
 
 <style>
   ul.grid {
+    display: grid;
+    gap: var(--size-space-unit);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     list-style: none;
     padding: 0;
   }

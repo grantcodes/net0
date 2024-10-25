@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 import Layout from '@layouts/Page.astro'
 import { defaultLang, getEntryStaticPaths } from '@i18n/utils'
 import Hero from '@components/Hero.astro'
+import { GrantCodesContainer } from '@grantcodes/ui/components/container/container.component.js'
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog')
@@ -27,8 +28,14 @@ const metadata = {
 <Layout metadata={metadata}>
   <article style="background: none;">
     <Hero title={entry.data.title} center />
-    <div class="container" style="max-width: 34rem">
+    <GrantCodesContainer>
       <Content />
-    </div>
+    </GrantCodesContainer>
   </article>
 </Layout>
+
+<style>
+  grantcodes-container {
+    padding-block: calc(var(--size-space-unit) * 4);
+  }
+</style>
