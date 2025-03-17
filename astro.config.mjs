@@ -1,9 +1,9 @@
-import { defineConfig, envField } from 'astro/config'
-import starlight from '@astrojs/starlight'
-import sitemap from '@astrojs/sitemap'
-import { envDefaults } from './integrations/env-defaults.ts'
-import net0OgImagesIntegration from './integrations/og-images/integration.ts'
-import footprintAstro from '@grantcodes/footprint-astro'
+import { defineConfig, envField } from 'astro/config';
+import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
+import { envDefaults } from './integrations/env-defaults.ts';
+import net0OgImagesIntegration from './integrations/og-images/integration.ts';
+import footprintAstro from '@grantcodes/footprint-astro';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +14,50 @@ export default defineConfig({
     locales: ['es', 'en'],
     routing: {
       prefixDefaultLocale: false,
+    },
+  },
+  env: {
+    schema: {
+      TITLE: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.TITLE,
+      }),
+      META_TITLE_TEMPLATE: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.META_TITLE_TEMPLATE,
+      }),
+      META_DESCRIPTION: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.META_DESCRIPTION,
+      }),
+      META_TWITTER: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.META_TWITTER,
+      }),
+      OG_IMAGE_COLOR: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.OG_IMAGE_COLOR,
+      }),
+      OG_IMAGE_BACKGROUND_COLOR: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.TITLE,
+      }),
+      OG_IMAGE_FONT_NAME: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.OG_IMAGE_BACKGROUND_COLOR,
+      }),
+      OG_IMAGE_FONT_FILE: envField.string({
+        context: 'server',
+        access: 'public',
+        default: envDefaults.OG_IMAGE_FONT_FILE,
+      }),
     },
   },
   integrations: [
@@ -53,50 +97,4 @@ export default defineConfig({
     }),
     sitemap(),
   ],
-  experimental: {
-    env: {
-      schema: {
-        TITLE: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.TITLE,
-        }),
-        META_TITLE_TEMPLATE: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.META_TITLE_TEMPLATE,
-        }),
-        META_DESCRIPTION: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.META_DESCRIPTION,
-        }),
-        META_TWITTER: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.META_TWITTER,
-        }),
-        OG_IMAGE_COLOR: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.OG_IMAGE_COLOR,
-        }),
-        OG_IMAGE_BACKGROUND_COLOR: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.TITLE,
-        }),
-        OG_IMAGE_FONT_NAME: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.OG_IMAGE_BACKGROUND_COLOR,
-        }),
-        OG_IMAGE_FONT_FILE: envField.string({
-          context: 'server',
-          access: 'public',
-          default: envDefaults.OG_IMAGE_FONT_FILE,
-        }),
-      },
-    },
-  },
-})
+});
